@@ -1,5 +1,5 @@
 # SpiderPi
-This repository will hold the code I'm writing to autonomously run my HiWonder SpiderPi hexapod.
+# This repository will hold the code I'm writing to autonomously run my HiWonder SpiderPi hexapod.
 
 ## Let's be clear. My code is for MY robot. You are welcome to use it but, the only warrantee it comes with is, it's useless. I offer NO SUPPORT. Other than, if it doesn't work for you, delete it. On the other hand, if you have ANY suggestions for impovements, or you want to share your experiences, PLEASE pipe up. :-)
 
