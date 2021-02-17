@@ -1,9 +1,7 @@
 # SpiderPi
 This repository will hold the code I'm writing to autonomously run my HiWonder SpiderPi hexapod.
 
-Let's be clear. My code is for MY robot. You are welcome to use it but, the only warrantee it comes with is, it's useless. I offer NO SUPPORT. Other than, if it doesn't work for you, delete it.
-
-On the other hand, if you have ANY suggestions for impovements PLEASE pipe up.
+## Let's be clear. My code is for MY robot. You are welcome to use it but, the only warrantee it comes with is, it's useless. I offer NO SUPPORT. Other than, if it doesn't work for you, delete it. On the other hand, if you have ANY suggestions for impovements, or you want to share your experiences, PLEASE pipe up. :-)
 
 My ambition is to have the robot respond to voice commands with vocal responses and, utilising senros fusion, SLAM & IK, travel between pre-defined destinations inside our home aviding obstacles. Then use it to take over the World.
 
