@@ -25,7 +25,8 @@ import time # Standard library of time & date functions
 import pigpio # Standard Raspberry Pi GPIO library
 import PTHeadCtrl as PTH # Library to define & control a Pan & Tilt Head
 from LegClass import Leg # Class to define and control a leg with 3 egrees of freedom (DoF)
-import HC-SR04 # Library to control ultrasonic sensor
+# import HCSR04 # Library to control ultrasonic sensor
+# import MPU950 # Library to read MPU9250/BM80 IMU
 
 # Define the hexapod
 pi = pigpio.pi() # Create a Raspberry Pi object
@@ -33,7 +34,8 @@ SpiderPi = () # Create a tuple to contain the hexapod
 for id in range(6): # Add 6 legs
     SpiderPi +=(Leg(pi, id), )
 PTH.init(pi) # Add a head
-# HC-SR04.init(pi) # Initialise ultrasonic sensor
+# HCSR04.init(pi) # Initialise ultrasonic sensor
+# MPU92250.init(pi) # Initialise inertial measurement sensor
 
 # Define names for the legs
 leg_names = ("Port rear", "Port centre", "Port front", "Starboard rear", "Starboard centre", "Starboard front")

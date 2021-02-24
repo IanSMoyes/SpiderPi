@@ -47,15 +47,16 @@ def portOff(pi): # Close the Raspberry Pi expansion board
     pi.write(17, 0) # GPIO17 Pulldown RX_CON (GPIO17)
     pi.write(27, 0) # GPIO27 Pulldown TX_CON (GPIO27)
 
-def checksum(buf):
+def checksum(buf, header=0x55):
     ''' 计算校验和 Calculate the checksum
     :param buf: data frame to be transmitted
+    :param header: data frame header
     :return: checksum to be appended
     '''
     sum = 0x00
     for b in buf:  # 求和 scan the buffer
         sum += b # sum the contents of the buffer
-    sum = sum - 0x55 - 0x55  # 去掉命令开头的两个 0x55 Remove the frame header, the 2 0x55
+    sum = sum - header - header  # 去掉命令开头的两个 0x55 Remove the frame header, the 2 0x55
     sum = ~sum  # 取反 Negate the sum (change the sign)
     return sum & 0xff # return the 8 least significant bits
 
