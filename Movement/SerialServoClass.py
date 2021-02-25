@@ -7,7 +7,7 @@
 
 # Class to define a serial bus servo motor
 
-import SerialBusCom as Ctrl # Bus Serial Servo communication driver
+import RPiExpCom as Ctrl # Raspberry Pi expansion board communication driver
 
 class Serial_Servo():
     ''' This is a class to define & therefore control a Bus Serial Servo motor

@@ -288,7 +288,7 @@ if __name__ == "__main__":
             temp = mpu9250.readTemperature()
             print("Temperature = " + str(temp) + "°C")
 
-            time.sleep(0.25)
+            time.sleep(1)
 
     except KeyboardInterrupt:
         sys.exit()
