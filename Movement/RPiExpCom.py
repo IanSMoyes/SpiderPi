@@ -4,7 +4,7 @@
 # Further development by ians.moyes@gmail.com
 # Translation by Google
 
-# Library to control the Bus Serial Servo Control Raspberry Pi expansion board
+# Library to control the HiWonder Bus Serial Servo Control Raspberry Pi expansion board
 
 import serial # Standard library to define serial ports
 import time # Standard library of time, diary & calendar functions

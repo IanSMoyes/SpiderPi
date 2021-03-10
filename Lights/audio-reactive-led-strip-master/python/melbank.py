@@ -1,7 +1,34 @@
+#!/usr/bin/python3
+# encoding: utf-8
+
+'''MIT License
+
+Copyright (c) [2016] [Scott Lawson]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.'''
+
+# Further development by ians.moyes@gmail.com
+
 """This module implements a Mel Filter Bank.
 In other words it is a filter bank with triangular shaped bands
-arnged on the mel frequency scale.
-An example ist shown in the following figure:
+arranged on the mel frequency scale.
+An example is shown in the following figure:
 .. plot::
     from pylab import plt
     import melbank
@@ -31,7 +58,7 @@ Functions
 """
 
 from numpy import abs, append, arange, insert, linspace, log10, round, zeros
-
+import config
 
 def hertz_to_mel(freq):
     """Returns mel-frequency from linear frequency input.
@@ -46,7 +73,6 @@ def hertz_to_mel(freq):
     """
     return 2595.0 * log10(1 + (freq / 700.0))
 
-
 def mel_to_hertz(mel):
     """Returns frequency from mel-frequency input.
     Parameter
@@ -60,8 +86,7 @@ def mel_to_hertz(mel):
     """
     return 700.0 * (10**(mel / 2595.0)) - 700.0
 
-
-def melfrequencies_mel_filterbank(num_bands, freq_min, freq_max, num_fft_bands):
+def melfrequencies_mel_filterbank(num_bands, freq_min=config.MIN_FREQUENCY, freq_max=congif.MAX_FREQUENCY, num_fft_bands=config.N_FFT_BINS):
     """Returns centerfrequencies and band edges for a mel filter bank
     Parameters
     ----------
@@ -89,9 +114,8 @@ def melfrequencies_mel_filterbank(num_bands, freq_min, freq_max, num_fft_bands):
     center_frequencies_mel = frequencies_mel[1:-1]
     return center_frequencies_mel, lower_edges_mel, upper_edges_mel
 
-
-def compute_melmat(num_mel_bands=12, freq_min=64, freq_max=8000,
-                   num_fft_bands=513, sample_rate=16000):
+def compute_melmat(num_mel_bands=12, freq_min=config.MIN_FREQUENCY, freq_max=congif.MAX_FREQUENCY,
+                   num_fft_bands=config.N_FFT_BINS, sample_rate=config.MIC_RATE):
     """Returns tranformation matrix for mel spectrum.
     Parameters
     ----------
@@ -105,7 +129,7 @@ def compute_melmat(num_mel_bands=12, freq_min=64, freq_max=8000,
         Maximum frequency for the last band.
         Default: 8000
     num_fft_bands : int
-        Number of fft-frequenc bands. This ist NFFT/2+1 !
+        Number of fft-frequenc bands. This is NFFT/2+1 !
         number of columns in melmat.
         Default: 513   (this means NFFT=1024)
     sample_rate : scalar

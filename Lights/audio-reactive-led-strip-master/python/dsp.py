@@ -1,8 +1,36 @@
-from __future__ import print_function
+#!/usr/bin/python3
+# encoding: utf-8
+
+'''MIT License
+
+Copyright (c) [2016] [Scott Lawson]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.'''
+
+# Further development by ians.moyes@gmail.com
+
+# Digital signal processing library
+
+# from __future__ import print_function
 import numpy as np
 import config
 import melbank
-
 
 class ExpFilter:
     """Simple exponential smoothing filter"""
@@ -24,20 +52,17 @@ class ExpFilter:
         self.value = alpha * value + (1.0 - alpha) * self.value
         return self.value
 
-
 def rfft(data, window=None):
     window = 1.0 if window is None else window(len(data))
     ys = np.abs(np.fft.rfft(data * window))
     xs = np.fft.rfftfreq(len(data), 1.0 / config.MIC_RATE)
     return xs, ys
 
-
 def fft(data, window=None):
     window = 1.0 if window is None else window(len(data))
     ys = np.fft.fft(data * window)
     xs = np.fft.fftfreq(len(data), 1.0 / config.MIC_RATE)
     return xs, ys
-
 
 def create_mel_bank():
     global samples, mel_y, mel_x
@@ -47,6 +72,7 @@ def create_mel_bank():
                                                freq_max=config.MAX_FREQUENCY,
                                                num_fft_bands=samples,
                                                sample_rate=config.MIC_RATE)
+
 samples = None
 mel_y = None
 mel_x = None

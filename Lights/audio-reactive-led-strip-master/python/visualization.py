@@ -1,5 +1,32 @@
-from __future__ import print_function
-from __future__ import division
+#!/usr/bin/python3
+# encoding: utf-8
+
+'''MIT License
+
+Copyright (c) [2016] [Scott Lawson]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.'''
+
+# Further development by ians.moyes@gmail.com
+
+# from __future__ import print_function
+# from __future__ import division
 import time
 import numpy as np
 from scipy.ndimage.filters import gaussian_filter1d
@@ -40,7 +67,6 @@ def frames_per_second():
         return _fps.value
     return _fps.update(1000.0 / dt)
 
-
 def memoize(function):
     """Provides a decorator for memoizing functions"""
     from functools import wraps
@@ -56,11 +82,9 @@ def memoize(function):
             return rv
     return wrapper
 
-
 @memoize
 def _normalized_linspace(size):
     return np.linspace(0, 1, size)
-
 
 def interpolate(y, new_length):
     """Intelligently resizes the array by linearly interpolating the values
@@ -86,7 +110,6 @@ def interpolate(y, new_length):
     z = np.interp(x_new, x_old, y)
     return z
 
-
 r_filt = dsp.ExpFilter(np.tile(0.01, config.N_PIXELS // 2),
                        alpha_decay=0.2, alpha_rise=0.99)
 g_filt = dsp.ExpFilter(np.tile(0.01, config.N_PIXELS // 2),
@@ -100,7 +123,6 @@ p_filt = dsp.ExpFilter(np.tile(1, (3, config.N_PIXELS // 2)),
 p = np.tile(1.0, (3, config.N_PIXELS // 2))
 gain = dsp.ExpFilter(np.tile(0.01, config.N_FFT_BINS),
                      alpha_decay=0.001, alpha_rise=0.99)
-
 
 def visualize_scroll(y):
     """Effect that originates in the center and scrolls outwards"""
@@ -122,7 +144,6 @@ def visualize_scroll(y):
     p[2, 0] = b
     # Update the LED strip
     return np.concatenate((p[:, ::-1], p), axis=1)
-
 
 def visualize_energy(y):
     """Effect that expands from the center with increasing sound energy"""
@@ -153,9 +174,7 @@ def visualize_energy(y):
     # Set the new pixel value
     return np.concatenate((p[:, ::-1], p), axis=1)
 
-
 _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
-
 
 def visualize_spectrum(y):
     """Effect that maps the Mel filterbank frequencies onto the LED strip"""
@@ -175,7 +194,6 @@ def visualize_spectrum(y):
     output = np.array([r, g,b]) * 255
     return output
 
-
 fft_plot_filter = dsp.ExpFilter(np.tile(1e-1, config.N_FFT_BINS),
                          alpha_decay=0.5, alpha_rise=0.99)
 mel_gain = dsp.ExpFilter(np.tile(1e-1, config.N_FFT_BINS),
@@ -187,7 +205,6 @@ volume = dsp.ExpFilter(config.MIN_VOLUME_THRESHOLD,
 fft_window = np.hamming(int(config.MIC_RATE / config.FPS) * config.N_ROLLING_HISTORY)
 prev_fps_update = time.time()
 
-
 def microphone_update(audio_samples):
     global y_roll, prev_rms, prev_exp, prev_fps_update
     # Normalize samples between 0 and 1
@@ -196,7 +213,7 @@ def microphone_update(audio_samples):
     y_roll[:-1] = y_roll[1:]
     y_roll[-1, :] = np.copy(y)
     y_data = np.concatenate(y_roll, axis=0).astype(np.float32)
-    
+
     vol = np.max(np.abs(y_data))
     if vol < config.MIN_VOLUME_THRESHOLD:
         print('No audio input. Volume below threshold. Volume:', vol)
@@ -241,16 +258,14 @@ def microphone_update(audio_samples):
             prev_fps_update = time.time()
             print('FPS {:.0f} / {:.0f}'.format(fps, config.FPS))
 
-
 # Number of audio samples to read every time frame
 samples_per_frame = int(config.MIC_RATE / config.FPS)
 
 # Array containing the rolling audio sample window
 y_roll = np.random.rand(config.N_ROLLING_HISTORY, samples_per_frame) / 1e16
 
-visualization_effect = visualize_spectrum
+visualization_effect = CONFIG.VISUALISATION_EFFECT
 """Visualization effect to display on the LED strip"""
-
 
 if __name__ == '__main__':
     if config.USE_GUI:

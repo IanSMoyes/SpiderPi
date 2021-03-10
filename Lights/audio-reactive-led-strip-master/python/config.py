@@ -102,3 +102,6 @@ N_ROLLING_HISTORY = 2
 
 MIN_VOLUME_THRESHOLD = 1e-7
 """No music visualization displayed if recorded audio volume below threshold"""
+
+VISUALISATION_EFFECT = visualize_spectrum
+"""Visualization effect to display on the LED strip"""
